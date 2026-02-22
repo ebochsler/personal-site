@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eric Bochsler — Data & Analytics Engineer</title>
+    <meta name="description" content="Personal website of Eric Bochsler, Data & Analytics Engineer with 9+ years of experience building end-to-end data infrastructure.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Animated background canvas -->
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+    <!-- Header / Nav -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <a href="#hero" class="logo">Eric Bochsler</a>
+            <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="nav" id="nav">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#resume" class="nav-link">Resume</a>
+                <a href="https://www.linkedin.com/in/eric-bochsler-14298a109/" class="nav-link" target="_blank" rel="noopener noreferrer">LinkedIn &#8599;</a>
+            </nav>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
+                <svg class="theme-icon sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="theme-icon moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <p class="hero-greeting mono">// welcome</p>
+                <h1 class="hero-name">
+                    <span class="typing-text" id="typing-text"></span><span class="cursor">|</span>
+                </h1>
+                <p class="hero-title">Data <span class="accent-amp">&amp;</span> Analytics Engineer</p>
+                <div class="hero-cta">
+                    <a href="#projects" class="btn btn-primary">View Projects</a>
+                    <a href="#about" class="btn btn-outline">About Me</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="headshot-frame">
+                    <img src="assets/headshot.jpg" alt="Eric Bochsler" class="headshot" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="headshot-placeholder">EB</div>
+                </div>
+                <div class="headshot-data-ring" aria-hidden="true"></div>
+            </div>
+        </div>
+        <div class="scroll-indicator" aria-hidden="true">
+            <span class="mono">scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="section-heading">
+                <span class="section-number mono">01.</span> About Me
+            </h2>
+            <div class="about-grid">
+                <div class="about-text reveal">
+                    <p>I'm a Data & Analytics Engineer with 9+ years of experience building end-to-end data infrastructure — from raw ingestion and dbt-driven modeling to self-serve dashboards and stakeholder delivery.</p>
+                    <p>Currently building a healthcare analytics function from the ground up at an early-stage company while leading full-stack data consulting engagements across diverse industries. I thrive in ambiguity, move fast, and take organizations from zero data infrastructure to production-ready analytics.</p>
+                    <p>Passionate about AI's potential to benefit society and eager to help scale the data foundation at mission-driven organizations.</p>
+                </div>
+                <div class="skills-terminal reveal">
+                    <div class="terminal-bar">
+                        <span class="terminal-dot red"></span>
+                        <span class="terminal-dot yellow"></span>
+                        <span class="terminal-dot green"></span>
+                        <span class="terminal-title mono">skills.sh</span>
+                    </div>
+                    <div class="terminal-body mono">
+                        <p><span class="prompt">$</span> cat skills.json</p>
+                        <p class="terminal-output">{</p>
+                        <p class="terminal-output">&nbsp;&nbsp;<span class="key">"languages"</span>: [<span class="val">"SQL"</span>, <span class="val">"Python"</span>],</p>
+                        <p class="terminal-output">&nbsp;&nbsp;<span class="key">"data_tools"</span>: [<span class="val">"dbt"</span>, <span class="val">"Snowflake"</span>, <span class="val">"BigQuery"</span>],</p>
+                        <p class="terminal-output">&nbsp;&nbsp;<span class="key">"cloud"</span>: [<span class="val">"Microsoft Fabric"</span>, <span class="val">"Azure Synapse"</span>],</p>
+                        <p class="terminal-output">&nbsp;&nbsp;<span class="key">"visualization"</span>: [<span class="val">"Power BI"</span>, <span class="val">"Tableau"</span>],</p>
+                        <p class="terminal-output">&nbsp;&nbsp;<span class="key">"ai"</span>: [<span class="val">"Claude"</span>, <span class="val">"Prompt Engineering"</span>],</p>
+                        <p class="terminal-output">&nbsp;&nbsp;<span class="key">"other"</span>: [<span class="val">"GitHub"</span>, <span class="val">"APIs"</span>, <span class="val">"ELT Pipelines"</span>]</p>
+                        <p class="terminal-output">}</p>
+                        <p><span class="prompt">$</span> <span class="cursor-blink">_</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section" id="projects">
+        <div class="container">
+            <h2 class="section-heading">
+                <span class="section-number mono">02.</span> Projects
+            </h2>
+            <div class="projects-grid">
+                <article class="project-card reveal">
+                    <div class="card-header">
+                        <span class="card-icon mono">&#9638;</span>
+                        <div class="card-links">
+                            <a href="#" class="card-link" aria-label="View project">&#8599;</a>
+                        </div>
+                    </div>
+                    <h3 class="card-title">End-to-End Data Warehouse Build</h3>
+                    <p class="card-description">Designed and delivered a full data warehouse for a consulting client at NuView Analytics — from API integrations and ingestion pipelines to a modeled analytics layer and self-serve Power BI dashboards, taking the client from zero data infrastructure to production-ready analytics.</p>
+                    <div class="card-tags">
+                        <span class="tag">Microsoft Fabric</span>
+                        <span class="tag">Power BI</span>
+                        <span class="tag">APIs</span>
+                        <span class="tag">SQL</span>
+                        <span class="tag">ELT Pipelines</span>
+                    </div>
+                </article>
+
+                <article class="project-card reveal">
+                    <div class="card-header">
+                        <span class="card-icon mono">&lt;/&gt;</span>
+                        <div class="card-links">
+                            <a href="#" class="card-link" aria-label="View project">&#8599;</a>
+                        </div>
+                    </div>
+                    <h3 class="card-title">Healthcare Analytics Platform</h3>
+                    <p class="card-description">Building the analytics engineering function from scratch at Unravel Health — architecting Snowflake-based ELT pipelines with dbt to transform patient survey data across 150+ hospitals in 15 states, supporting a platform impacting 500,000+ families.</p>
+                    <div class="card-tags">
+                        <span class="tag">Snowflake</span>
+                        <span class="tag">dbt</span>
+                        <span class="tag">SQL</span>
+                        <span class="tag">Data Modeling</span>
+                    </div>
+                </article>
+
+                <article class="project-card reveal">
+                    <div class="card-header">
+                        <span class="card-icon mono">&#9670;</span>
+                        <div class="card-links">
+                            <a href="#" class="card-link" aria-label="View project">&#8599;</a>
+                        </div>
+                    </div>
+                    <h3 class="card-title">Member-Facing Analytics Portal</h3>
+                    <p class="card-description">Led development of an interactive Tableau analytics platform at WSHA serving 1,000+ users across Washington state hospitals — replacing static PDF reports with self-serve dashboards and contributing to 100% membership retention.</p>
+                    <div class="card-tags">
+                        <span class="tag">Tableau</span>
+                        <span class="tag">SQL</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">Data Modeling</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resume Section -->
+    <section class="section" id="resume">
+        <div class="container">
+            <h2 class="section-heading">
+                <span class="section-number mono">03.</span> Resume
+            </h2>
+            <div class="resume-layout">
+                <!-- Experience Timeline -->
+                <div class="resume-block">
+                    <h3 class="resume-block-title mono">> experience</h3>
+                    <div class="timeline">
+                        <div class="timeline-item reveal">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <span class="timeline-date mono">Mar 2025 — Present</span>
+                                <h4 class="timeline-role">Analytics Engineer & Strategic Data Advisor</h4>
+                                <p class="timeline-company">Unravel Health</p>
+                                <p class="timeline-desc">Building the analytics engineering function from scratch at an early-stage healthcare company. Architecting Snowflake-based ELT pipelines using dbt and SQL. Own data strategy for TeamBirth, deployed across 150+ hospitals in 15 states impacting 500,000+ families.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item reveal">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <span class="timeline-date mono">Nov 2023 — Present</span>
+                                <h4 class="timeline-role">Senior Data Analyst</h4>
+                                <p class="timeline-company">NuView Analytics</p>
+                                <p class="timeline-desc">Leading full-stack data consulting engagements, taking clients from zero data infrastructure to production-ready analytics. Building multi-step ELT pipelines across Snowflake, BigQuery, Microsoft Fabric, and Power BI. Contributed to 100%+ growth in company revenue and headcount.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item reveal">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <span class="timeline-date mono">Dec 2018 — Nov 2023</span>
+                                <h4 class="timeline-role">Senior Data Analyst</h4>
+                                <p class="timeline-company">Washington State Hospital Association</p>
+                                <p class="timeline-desc">Led development of a member-facing Tableau analytics platform serving 1,000+ users with 100% membership retention. Built canonical data models and reporting pipelines in SQL. Stepped into Interim Technical Manager role.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item reveal">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <span class="timeline-date mono">Dec 2016 — Dec 2018</span>
+                                <h4 class="timeline-role">Data Analyst</h4>
+                                <p class="timeline-company">Washington State Hospital Association</p>
+                                <p class="timeline-desc">Curated data from hundreds of member hospitals supporting CMS reporting, generating over $20M in organizational revenue. Automated workflows saving $30,000+ annually. Replaced legacy SAS programs with streamlined SQL.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skills Visualization -->
+                <div class="resume-block">
+                    <h3 class="resume-block-title mono">> skills</h3>
+                    <div class="skills-bars">
+                        <div class="skill-bar reveal">
+                            <div class="skill-info">
+                                <span class="skill-name">SQL & Data Modeling</span>
+                                <span class="skill-pct mono">95%</span>
+                            </div>
+                            <div class="skill-track">
+                                <div class="skill-fill" data-width="95"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar reveal">
+                            <div class="skill-info">
+                                <span class="skill-name">dbt & ELT Pipelines</span>
+                                <span class="skill-pct mono">93%</span>
+                            </div>
+                            <div class="skill-track">
+                                <div class="skill-fill" data-width="93"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar reveal">
+                            <div class="skill-info">
+                                <span class="skill-name">Snowflake / BigQuery / Fabric</span>
+                                <span class="skill-pct mono">92%</span>
+                            </div>
+                            <div class="skill-track">
+                                <div class="skill-fill" data-width="92"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar reveal">
+                            <div class="skill-info">
+                                <span class="skill-name">Python</span>
+                                <span class="skill-pct mono">88%</span>
+                            </div>
+                            <div class="skill-track">
+                                <div class="skill-fill" data-width="88"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar reveal">
+                            <div class="skill-info">
+                                <span class="skill-name">Tableau & Power BI</span>
+                                <span class="skill-pct mono">90%</span>
+                            </div>
+                            <div class="skill-track">
+                                <div class="skill-fill" data-width="90"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar reveal">
+                            <div class="skill-info">
+                                <span class="skill-name">AI & Prompt Engineering</span>
+                                <span class="skill-pct mono">85%</span>
+                            </div>
+                            <div class="skill-track">
+                                <div class="skill-fill" data-width="85"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="resume-block-title mono" style="margin-top: 2.5rem;">> education</h3>
+                    <div class="education-item reveal">
+                        <h4 class="timeline-role">B.S. in Physics & Astronomy, Minor in Mathematics</h4>
+                        <p class="timeline-company">University of Washington, Seattle, WA</p>
+                        <span class="timeline-date mono">2012 — 2016</span>
+                    </div>
+
+                    <h3 class="resume-block-title mono" style="margin-top: 2.5rem;">> certifications</h3>
+                    <div class="education-item reveal">
+                        <h4 class="timeline-role">Certified Tableau Data Analyst</h4>
+                        <span class="timeline-date mono">2023</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-links">
+                <a href="https://www.linkedin.com/in/eric-bochsler-14298a109/" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn &#8599;</a>
+            </div>
+            <p class="footer-tagline mono">Built with data &amp; code</p>
+            <p class="footer-copy">&copy; 2026 Eric Bochsler. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
