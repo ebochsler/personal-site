@@ -906,3 +906,428 @@ img {
         padding: 4rem 0;
     }
 }
+
+/* ============================================================
+   Running Page
+   ============================================================ */
+
+/* --- Running Hero --- */
+.running-hero {
+    position: relative;
+    z-index: 1;
+    padding-top: calc(var(--header-h) + 4rem);
+    padding-bottom: 2rem;
+}
+
+.running-hero-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+}
+
+.running-hero-month {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+/* --- Stat Cards --- */
+.stat-cards {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--card-border-hover);
+    box-shadow: 0 8px 30px var(--card-shadow-hover);
+}
+
+.stat-icon {
+    font-size: 1.2rem;
+    color: var(--primary);
+    margin-bottom: 0.25rem;
+}
+
+.stat-value {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.1;
+}
+
+.stat-unit {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--primary);
+}
+
+.stat-label {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 0.15rem;
+}
+
+/* --- Charts Layout --- */
+.running-charts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.chart-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.chart-title {
+    font-size: 0.9rem;
+    color: var(--secondary);
+    margin-bottom: 1.25rem;
+}
+
+/* --- Calendar Heatmap --- */
+.calendar-dual {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.calendar-month-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.calendar-labels {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 4px;
+}
+
+.calendar-labels span {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+
+.calendar-cell {
+    aspect-ratio: 1;
+    border-radius: 4px;
+    background: var(--skill-track-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    position: relative;
+    cursor: default;
+}
+
+.calendar-cell.empty {
+    background: transparent;
+}
+
+.calendar-cell.active {
+    background: rgba(0, 212, 255, calc(var(--intensity, 0) * 0.8));
+    color: var(--text);
+}
+
+[data-theme="light"] .calendar-cell.active {
+    background: rgba(0, 136, 204, calc(var(--intensity, 0) * 0.6));
+    color: #fff;
+}
+
+.calendar-cell[data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-card);
+    border: 1px solid var(--border-medium);
+    color: var(--text);
+    font-size: 0.7rem;
+    padding: 0.3rem 0.5rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* --- Horizontal Bar Chart --- */
+.bar-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.hbar-row {
+    display: grid;
+    grid-template-columns: 72px 1fr 36px;
+    gap: 0.6rem;
+    align-items: center;
+}
+
+.hbar-label {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-align: right;
+    white-space: nowrap;
+}
+
+.hbar-track {
+    height: 10px;
+    background: var(--skill-track-bg);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.hbar-fill {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border-radius: 5px;
+    transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.bar-chart.animate .hbar-fill {
+    width: var(--target-width);
+}
+
+.hbar-value {
+    font-size: 0.7rem;
+    color: var(--text);
+    text-align: right;
+}
+
+/* --- Workout Type Breakdown --- */
+.type-breakdown {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.type-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.type-row {
+    display: grid;
+    grid-template-columns: 100px 1fr 32px;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.type-label {
+    font-size: 0.85rem;
+    color: var(--text);
+}
+
+.type-track {
+    height: 8px;
+    background: var(--skill-track-bg);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.type-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border-radius: 4px;
+    transition: width 0.8s ease;
+}
+
+.type-count {
+    font-size: 0.8rem;
+    color: var(--primary);
+    text-align: right;
+}
+
+/* --- Route Map Cards --- */
+.route-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.route-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+.route-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--card-border-hover);
+    box-shadow: 0 10px 40px var(--card-shadow-hover);
+}
+
+.route-map {
+    width: 100%;
+    height: 220px;
+    background: var(--bg);
+}
+
+.route-details {
+    padding: 1.25rem;
+}
+
+.route-name {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+}
+
+.route-date {
+    font-size: 0.75rem;
+    color: var(--primary);
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+.route-stats {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.route-stat {
+    display: flex;
+    align-items: baseline;
+    gap: 0.2rem;
+}
+
+.route-stat-value {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.route-stat-unit {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+/* --- Error State --- */
+.running-error {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 2rem;
+}
+
+.running-error code {
+    font-family: var(--font-mono);
+    color: var(--primary);
+    background: var(--tag-bg);
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+}
+
+/* --- Active Nav Link --- */
+.nav-link.active {
+    color: var(--primary);
+}
+
+/* --- Light mode running cards --- */
+[data-theme="light"] .stat-card {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .stat-card:hover {
+    box-shadow: 0 8px 30px rgba(0, 136, 204, 0.12);
+}
+
+[data-theme="light"] .chart-block {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .type-breakdown {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .route-card {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .route-card:hover {
+    box-shadow: 0 8px 30px rgba(0, 136, 204, 0.12);
+}
+
+/* --- Running Page Responsive --- */
+@media (max-width: 900px) {
+    .stat-cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .running-charts {
+        grid-template-columns: 1fr;
+    }
+
+    .route-cards {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .stat-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .route-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .type-row {
+        grid-template-columns: 80px 1fr 28px;
+    }
+
+    .hbar-row {
+        grid-template-columns: 60px 1fr 30px;
+    }
+
+    .hbar-label {
+        font-size: 0.58rem;
+    }
+}

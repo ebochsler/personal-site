@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Running & Training — Eric Bochsler</title>
+    <meta name="description" content="Monthly running stats, route maps, and training data from Eric Bochsler's Strava.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Animated background canvas -->
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+    <!-- Header / Nav -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">Eric Bochsler</a>
+            <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="nav" id="nav">
+                <a href="index.html#about" class="nav-link">About</a>
+                <a href="index.html#projects" class="nav-link">Projects</a>
+                <a href="index.html#resume" class="nav-link">Resume</a>
+                <a href="running.html" class="nav-link active">Running</a>
+                <a href="https://www.linkedin.com/in/eric-bochsler-14298a109/" class="nav-link" target="_blank" rel="noopener noreferrer">LinkedIn &#8599;</a>
+            </nav>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
+                <svg class="theme-icon sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="theme-icon moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Running Hero -->
+    <section class="running-hero" id="running-hero">
+        <div class="container">
+            <p class="hero-greeting mono">// fitness data</p>
+            <h1 class="running-hero-title">Running <span class="accent-amp">&amp;</span> Training</h1>
+            <p class="running-hero-month mono" id="month-label">Loading...</p>
+        </div>
+    </section>
+
+    <!-- Section 01: Monthly Overview -->
+    <section class="section" id="overview">
+        <div class="container">
+            <h2 class="section-heading">
+                <span class="section-number mono">01.</span> Monthly Overview
+            </h2>
+
+            <!-- Stat Cards -->
+            <div class="stat-cards" id="stat-cards">
+                <div class="stat-card reveal">
+                    <span class="stat-icon mono">&#9654;</span>
+                    <span class="stat-value" id="stat-distance" data-target="0">0</span>
+                    <span class="stat-unit">miles</span>
+                    <span class="stat-label">Total Distance</span>
+                </div>
+                <div class="stat-card reveal">
+                    <span class="stat-icon mono">#</span>
+                    <span class="stat-value" id="stat-runs" data-target="0">0</span>
+                    <span class="stat-unit">runs</span>
+                    <span class="stat-label">Total Runs</span>
+                </div>
+                <div class="stat-card reveal">
+                    <span class="stat-icon mono">&#9201;</span>
+                    <span class="stat-value" id="stat-pace" data-target="0">0:00</span>
+                    <span class="stat-unit">/mi</span>
+                    <span class="stat-label">Avg Pace</span>
+                </div>
+                <div class="stat-card reveal">
+                    <span class="stat-icon mono">&#8986;</span>
+                    <span class="stat-value" id="stat-time" data-target="0">0</span>
+                    <span class="stat-unit">hours</span>
+                    <span class="stat-label">Total Time</span>
+                </div>
+                <div class="stat-card reveal">
+                    <span class="stat-icon mono">&#9650;</span>
+                    <span class="stat-value" id="stat-elevation" data-target="0">0</span>
+                    <span class="stat-unit">ft</span>
+                    <span class="stat-label">Elevation Gain</span>
+                </div>
+            </div>
+
+            <!-- Calendar + Bar Chart side by side -->
+            <div class="running-charts reveal">
+                <div class="chart-block">
+                    <h3 class="chart-title mono">> daily activity</h3>
+                    <div class="calendar-dual" id="calendar-dual"></div>
+                </div>
+                <div class="chart-block">
+                    <h3 class="chart-title mono">> weekly mileage</h3>
+                    <div class="bar-chart" id="bar-chart"></div>
+                </div>
+            </div>
+
+            <!-- Workout Type Breakdown -->
+            <div class="type-breakdown reveal">
+                <h3 class="chart-title mono">> workout types</h3>
+                <div class="type-bars" id="type-bars"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 02: Recent Routes -->
+    <section class="section" id="routes">
+        <div class="container">
+            <h2 class="section-heading">
+                <span class="section-number mono">02.</span> Recent Routes
+            </h2>
+            <div class="route-cards" id="route-cards"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-links">
+                <a href="https://www.linkedin.com/in/eric-bochsler-14298a109/" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn &#8599;</a>
+            </div>
+            <p class="footer-tagline mono">Built with data &amp; code</p>
+            <p class="footer-copy">&copy; 2026 Eric Bochsler. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="running.js"></script>
+</body>
+</html>
