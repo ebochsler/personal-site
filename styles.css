@@ -1249,6 +1249,74 @@ img {
     color: var(--text-muted);
 }
 
+/* --- Featured Region Maps --- */
+.featured-maps-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.featured-region-map {
+    position: relative;
+    width: 100%;
+    height: 380px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.featured-region-map:hover {
+    border-color: var(--card-border-hover);
+    box-shadow: 0 10px 40px var(--card-shadow-hover);
+}
+
+.featured-region-label {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    z-index: 2;
+    pointer-events: none;
+}
+
+[data-theme="light"] .featured-region-map {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .featured-region-map:hover {
+    box-shadow: 0 8px 30px rgba(0, 136, 204, 0.12);
+}
+
+/* --- Featured City Badge & Aggregate --- */
+.featured-city-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+    flex-wrap: wrap;
+}
+
+.featured-city-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--primary);
+    background: var(--tag-bg);
+    padding: 0.2rem 0.55rem;
+    border-radius: 3px;
+    letter-spacing: 0.02em;
+}
+
+.featured-city-aggregate {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-muted);
+}
+
 /* --- Error State --- */
 .running-error {
     color: var(--text-muted);
@@ -1295,6 +1363,122 @@ img {
     box-shadow: 0 8px 30px rgba(0, 136, 204, 0.12);
 }
 
+/* --- Goal Tracker --- */
+.goal-section {
+    padding-top: 2rem;
+    padding-bottom: 0;
+}
+
+.goal-tracker {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 2rem;
+}
+
+.goal-title {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+}
+
+.goal-subtitle {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 1.75rem;
+}
+
+.goal-track-wrapper {
+    margin-bottom: 1.75rem;
+}
+
+.goal-markers {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.goal-marker {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.goal-track {
+    position: relative;
+    width: 100%;
+    height: 12px;
+    background: var(--skill-track-bg);
+    border-radius: 6px;
+    overflow: visible;
+}
+
+.goal-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border-radius: 6px;
+    transition: width 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.goal-runner {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(-50%, -50%) scaleX(-1);
+    font-size: 1.5rem;
+    transition: left 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 2;
+    filter: drop-shadow(0 0 6px rgba(0, 212, 255, 0.4));
+}
+
+.goal-finish {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(50%, -50%);
+    font-size: 1.3rem;
+    z-index: 1;
+}
+
+.goal-stats {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.goal-stat {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.goal-stat-value {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.goal-stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+[data-theme="light"] .goal-tracker {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .goal-runner {
+    filter: drop-shadow(0 0 6px rgba(0, 136, 204, 0.3));
+}
+
 /* --- Running Page Responsive --- */
 @media (max-width: 900px) {
     .stat-cards {
@@ -1308,6 +1492,14 @@ img {
     .route-cards {
         grid-template-columns: 1fr 1fr;
     }
+
+    .featured-maps-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .featured-region-map {
+        height: 300px;
+    }
 }
 
 @media (max-width: 640px) {
@@ -1317,6 +1509,10 @@ img {
 
     .route-cards {
         grid-template-columns: 1fr;
+    }
+
+    .featured-region-map {
+        height: 250px;
     }
 
     .type-row {
@@ -1329,5 +1525,23 @@ img {
 
     .hbar-label {
         font-size: 0.58rem;
+    }
+
+    .goal-tracker {
+        padding: 1.5rem 1rem;
+    }
+
+    .goal-stats {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .goal-stat-value {
+        font-size: 1.4rem;
+    }
+
+    .goal-runner {
+        font-size: 1.2rem;
     }
 }

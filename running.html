@@ -47,6 +47,46 @@
         </div>
     </section>
 
+    <!-- Goal Tracker: Race to 1000 Miles -->
+    <section class="section goal-section" id="goal-tracker">
+        <div class="container">
+            <div class="goal-tracker reveal">
+                <h3 class="goal-title">Race to 1,000 Miles</h3>
+                <p class="goal-subtitle mono">// 2026 year-to-date progress</p>
+
+                <div class="goal-track-wrapper">
+                    <div class="goal-markers">
+                        <span class="goal-marker mono">0</span>
+                        <span class="goal-marker mono">250</span>
+                        <span class="goal-marker mono">500</span>
+                        <span class="goal-marker mono">750</span>
+                        <span class="goal-marker mono">1000</span>
+                    </div>
+                    <div class="goal-track">
+                        <div class="goal-fill" id="goal-fill"></div>
+                        <div class="goal-runner" id="goal-runner">🏃‍♂️</div>
+                        <div class="goal-finish">🏁</div>
+                    </div>
+                </div>
+
+                <div class="goal-stats">
+                    <div class="goal-stat">
+                        <span class="goal-stat-value" id="goal-miles-run">0</span>
+                        <span class="goal-stat-label">miles run</span>
+                    </div>
+                    <div class="goal-stat">
+                        <span class="goal-stat-value" id="goal-miles-left">0</span>
+                        <span class="goal-stat-label">miles to go</span>
+                    </div>
+                    <div class="goal-stat">
+                        <span class="goal-stat-value" id="goal-pct">0%</span>
+                        <span class="goal-stat-label">complete</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Section 01: Monthly Overview -->
     <section class="section" id="overview">
         <div class="container">
@@ -118,6 +158,24 @@
         </div>
     </section>
 
+    <!-- Section 03: Featured Routes -->
+    <section class="section" id="featured">
+        <div class="container">
+            <h2 class="section-heading">
+                <span class="section-number mono">03.</span> Featured Routes
+            </h2>
+            <div class="featured-maps-grid reveal">
+                <div class="featured-region-map" id="featured-map-na">
+                    <span class="featured-region-label mono">North America</span>
+                </div>
+                <div class="featured-region-map" id="featured-map-eu">
+                    <span class="featured-region-label mono">Europe</span>
+                </div>
+            </div>
+            <div class="route-cards" id="featured-route-cards"></div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container footer-inner">
@@ -130,6 +188,8 @@
     </footer>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://d3js.org/topojson.v3.min.js"></script>
     <script src="running.js"></script>
 </body>
 </html>

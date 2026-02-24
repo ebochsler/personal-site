@@ -25,6 +25,8 @@
         initCanvas();
         // Re-render maps with correct tile layer
         renderMaps();
+        renderFeaturedMaps();
+        renderWorldMap();
     });
 
     // ── Mobile Nav Toggle ──────────────────────────────────────
@@ -179,6 +181,9 @@
     // ── Data Fetching & Rendering ──────────────────────────────
     let runData = null;
     let mapInstances = [];
+    let featuredData = null;
+    let featuredMapInstances = [];
+    let worldMapInstance = null;
 
     fetch('data/running-data.json')
         .then((r) => {
@@ -195,13 +200,88 @@
                 '<p class="running-error">Run <code>python scripts/fetch_strava.py</code> to generate data.</p>';
         });
 
+    fetch('data/featured-routes.json')
+        .then((r) => {
+            if (!r.ok) throw new Error('Featured data not found');
+            return r.json();
+        })
+        .then((data) => {
+            featuredData = data;
+            renderFeaturedSection(data);
+        })
+        .catch(() => {
+            // Silently skip if no featured data
+        });
+
     function renderAll(data) {
         document.getElementById('month-label').textContent = data.year + ' Year to Date';
+        renderGoalTracker(data.summary);
         renderStatCards(data.summary);
         renderCalendars(data.calendars);
         renderBarChart(data.weekly_mileage);
         renderWorkoutTypes(data.workout_types);
         renderRouteCards(data.recent_runs);
+    }
+
+    // ── Goal Tracker (Race to 1000 Miles) ─────────────────────
+    function renderGoalTracker(summary) {
+        const goal = 1000;
+        const current = summary.total_distance_mi;
+        const progress = Math.min(current / goal, 1);
+        const remaining = Math.max(goal - current, 0);
+        const pct = (progress * 100);
+
+        const fill = document.getElementById('goal-fill');
+        const runner = document.getElementById('goal-runner');
+        const milesRunEl = document.getElementById('goal-miles-run');
+        const milesLeftEl = document.getElementById('goal-miles-left');
+        const pctEl = document.getElementById('goal-pct');
+
+        if (!fill || !runner) return;
+
+        // Observe the goal tracker and trigger animation on scroll
+        const tracker = document.querySelector('.goal-tracker');
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting) {
+                    // Animate progress bar and runner
+                    fill.style.width = `${pct}%`;
+                    runner.style.left = `${pct}%`;
+
+                    // Animate counters
+                    animateGoalCounter(milesRunEl, current, 1, false);
+                    animateGoalCounter(milesLeftEl, remaining, 1, false);
+                    animateGoalCounter(pctEl, pct, 1, true);
+
+                    observer.unobserve(tracker);
+                }
+            },
+            { threshold: 0.2 }
+        );
+        observer.observe(tracker);
+    }
+
+    function animateGoalCounter(el, target, decimals, isPct) {
+        if (!el) return;
+        const duration = 1200;
+        const start = performance.now();
+
+        function tick(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const ease = 1 - Math.pow(1 - progress, 3);
+            const current = target * ease;
+
+            if (isPct) {
+                el.textContent = current.toFixed(decimals) + '%';
+            } else {
+                el.textContent = current.toFixed(decimals);
+            }
+
+            if (progress < 1) requestAnimationFrame(tick);
+        }
+
+        requestAnimationFrame(tick);
     }
 
     // ── Stat Card Animated Counters ────────────────────────────
@@ -475,6 +555,29 @@
         setTimeout(() => renderMaps(), 100);
     }
 
+    function getTileUrl() {
+        const isDark = root.getAttribute('data-theme') !== 'light';
+        return isDark
+            ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+            : 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+    }
+
+    function addGlowPolyline(map, coords) {
+        const isDark = root.getAttribute('data-theme') !== 'light';
+        L.polyline(coords, {
+            color: isDark ? 'rgba(0, 212, 255, 0.15)' : 'rgba(0, 136, 204, 0.15)',
+            weight: 12, lineCap: 'round', lineJoin: 'round',
+        }).addTo(map);
+        L.polyline(coords, {
+            color: isDark ? 'rgba(0, 212, 255, 0.5)' : 'rgba(0, 136, 204, 0.5)',
+            weight: 5, lineCap: 'round', lineJoin: 'round',
+        }).addTo(map);
+        L.polyline(coords, {
+            color: isDark ? '#00ff88' : '#00994d',
+            weight: 2.5, lineCap: 'round', lineJoin: 'round',
+        }).addTo(map);
+    }
+
     function renderMaps() {
         // Destroy existing map instances
         mapInstances.forEach((m) => m.remove());
@@ -482,10 +585,7 @@
 
         if (!runData || !runData.recent_runs) return;
 
-        const isDark = root.getAttribute('data-theme') !== 'light';
-        const tileUrl = isDark
-            ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
-            : 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+        const tileUrl = getTileUrl();
 
         runData.recent_runs.forEach((run, i) => {
             const mapEl = document.getElementById(`map-${i}`);
@@ -503,39 +603,270 @@
             });
 
             L.tileLayer(tileUrl, { subdomains: 'abcd', maxZoom: 19 }).addTo(map);
+            addGlowPolyline(map, run.coordinates);
 
-            // Three-layer glow polyline
-            const coords = run.coordinates;
-
-            // Outer glow (wide, translucent cyan)
-            L.polyline(coords, {
-                color: isDark ? 'rgba(0, 212, 255, 0.15)' : 'rgba(0, 136, 204, 0.15)',
-                weight: 12,
-                lineCap: 'round',
-                lineJoin: 'round',
-            }).addTo(map);
-
-            // Middle glow
-            L.polyline(coords, {
-                color: isDark ? 'rgba(0, 212, 255, 0.5)' : 'rgba(0, 136, 204, 0.5)',
-                weight: 5,
-                lineCap: 'round',
-                lineJoin: 'round',
-            }).addTo(map);
-
-            // Core line (narrow, bright green)
-            L.polyline(coords, {
-                color: isDark ? '#00ff88' : '#00994d',
-                weight: 2.5,
-                lineCap: 'round',
-                lineJoin: 'round',
-            }).addTo(map);
-
-            // Fit map to route bounds
-            const bounds = L.latLngBounds(coords);
+            const bounds = L.latLngBounds(run.coordinates);
             map.fitBounds(bounds, { padding: [30, 30] });
 
             mapInstances.push(map);
+        });
+    }
+
+    // ── Featured Routes Section ─────────────────────────────────
+    function renderFeaturedSection(data) {
+        renderFeaturedCards(data);
+        setTimeout(() => {
+            renderWorldMap();
+            renderFeaturedMaps();
+        }, 100);
+    }
+
+    function renderFeaturedCards(data) {
+        const container = document.getElementById('featured-route-cards');
+        container.innerHTML = '';
+
+        data.forEach((entry, i) => {
+            const run = entry.featured_run;
+            const card = document.createElement('article');
+            card.className = 'route-card reveal';
+            card.id = `featured-card-${i}`;
+
+            const mapDiv = document.createElement('div');
+            mapDiv.className = 'route-map';
+            mapDiv.id = `featured-map-${i}`;
+
+            const details = document.createElement('div');
+            details.className = 'route-details';
+
+            const dateObj = new Date(run.date + 'T00:00:00');
+            const dateStr = dateObj.toLocaleDateString('en-US', {
+                month: 'short', day: 'numeric', year: 'numeric'
+            });
+
+            const runsLabel = entry.total_runs === 1 ? 'run' : 'runs';
+
+            details.innerHTML = `
+                <div class="featured-city-header">
+                    <span class="featured-city-badge">${entry.city}</span>
+                    <span class="featured-city-aggregate">${entry.total_miles} mi &middot; ${entry.total_runs} ${runsLabel}</span>
+                </div>
+                <h3 class="route-name">${run.name}</h3>
+                <span class="route-date mono">${dateStr}</span>
+                <div class="route-stats">
+                    <div class="route-stat">
+                        <span class="route-stat-value">${run.distance_mi}</span>
+                        <span class="route-stat-unit">mi</span>
+                    </div>
+                    <div class="route-stat">
+                        <span class="route-stat-value">${formatPace(run.pace_min)}</span>
+                        <span class="route-stat-unit">/mi</span>
+                    </div>
+                    <div class="route-stat">
+                        <span class="route-stat-value">${run.elapsed_time_min}</span>
+                        <span class="route-stat-unit">min</span>
+                    </div>
+                    <div class="route-stat">
+                        <span class="route-stat-value">${run.elevation_ft}</span>
+                        <span class="route-stat-unit">ft</span>
+                    </div>
+                </div>
+            `;
+
+            card.appendChild(mapDiv);
+            card.appendChild(details);
+            container.appendChild(card);
+
+            revealObserver.observe(card);
+        });
+    }
+
+    // ── D3 Regional Maps ────────────────────────────────────────
+    let worldTopoData = null;
+
+    // Pre-fetch world topology
+    d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
+        .then((data) => { worldTopoData = data; })
+        .catch(() => {});
+
+    function renderWorldMap() {
+        if (!featuredData || featuredData.length === 0) return;
+
+        const naData = featuredData.filter((d) => d.continent === 'na');
+        const euData = featuredData.filter((d) => d.continent === 'eu');
+
+        renderRegionMap('featured-map-na', naData);
+        renderRegionMap('featured-map-eu', euData);
+    }
+
+    function renderRegionMap(elementId, regionData) {
+        const mapEl = document.getElementById(elementId);
+        if (!mapEl) return;
+        if (regionData.length === 0) return;
+
+        // Preserve the label
+        mapEl.querySelectorAll('svg, .region-tooltip').forEach((el) => el.remove());
+
+        const isDark = root.getAttribute('data-theme') !== 'light';
+        const rect = mapEl.getBoundingClientRect();
+        const width = rect.width || mapEl.clientWidth;
+        const height = rect.height || mapEl.clientHeight;
+
+        // Compute bounding box from actual marker positions with padding
+        const lngs = regionData.map((d) => d.start_latlng[1]);
+        const lats = regionData.map((d) => d.start_latlng[0]);
+        const padLng = Math.max((Math.max(...lngs) - Math.min(...lngs)) * 0.2, 4);
+        const padLat = Math.max((Math.max(...lats) - Math.min(...lats)) * 0.2, 4);
+
+        const regionBbox = {
+            type: 'FeatureCollection',
+            features: [{
+                type: 'Feature',
+                geometry: {
+                    type: 'MultiPoint',
+                    coordinates: [
+                        [Math.min(...lngs) - padLng, Math.min(...lats) - padLat],
+                        [Math.max(...lngs) + padLng, Math.max(...lats) + padLat],
+                    ],
+                },
+            }],
+        };
+
+        const projection = d3.geoMercator()
+            .fitSize([width, height], regionBbox);
+
+        const path = d3.geoPath(projection);
+
+        const svg = d3.select(mapEl)
+            .append('svg')
+            .attr('width', width)
+            .attr('height', height)
+            .style('display', 'block');
+
+        // Ocean background
+        svg.append('rect')
+            .attr('width', width)
+            .attr('height', height)
+            .attr('fill', isDark ? '#0d0d18' : '#e8ecf2');
+
+        // Graticule
+        const graticule = d3.geoGraticule().step([10, 10]);
+        svg.append('path')
+            .datum(graticule())
+            .attr('d', path)
+            .attr('fill', 'none')
+            .attr('stroke', isDark ? 'rgba(0, 212, 255, 0.06)' : 'rgba(0, 136, 204, 0.08)')
+            .attr('stroke-width', 0.5);
+
+        // Land masses
+        if (worldTopoData) {
+            const land = topojson.feature(worldTopoData, worldTopoData.objects.countries);
+            svg.append('g')
+                .selectAll('path')
+                .data(land.features)
+                .join('path')
+                .attr('d', path)
+                .attr('fill', isDark ? '#1a1a2e' : '#d0d5dd')
+                .attr('stroke', isDark ? 'rgba(0, 212, 255, 0.1)' : 'rgba(0, 136, 204, 0.15)')
+                .attr('stroke-width', 0.5);
+        }
+
+        // Tooltip
+        const tooltip = d3.select(mapEl)
+            .append('div')
+            .attr('class', 'region-tooltip')
+            .style('position', 'absolute')
+            .style('pointer-events', 'none')
+            .style('background', isDark ? 'rgba(18, 18, 26, 0.95)' : 'rgba(255, 255, 255, 0.95)')
+            .style('border', `1px solid ${isDark ? 'rgba(0, 212, 255, 0.2)' : 'rgba(0, 136, 204, 0.25)'}`)
+            .style('color', isDark ? '#e0e0e0' : '#1a1a2e')
+            .style('font-family', 'var(--font-mono)')
+            .style('font-size', '0.75rem')
+            .style('padding', '0.35rem 0.6rem')
+            .style('border-radius', '4px')
+            .style('opacity', 0)
+            .style('transition', 'opacity 0.15s')
+            .style('z-index', 10);
+
+        // City markers
+        const markerColor = isDark ? '#00d4ff' : '#0088cc';
+        const glowColor = isDark ? 'rgba(0, 212, 255, 0.3)' : 'rgba(0, 136, 204, 0.3)';
+
+        regionData.forEach((entry) => {
+            if (!entry.start_latlng || entry.start_latlng.length < 2) return;
+
+            const globalIdx = featuredData.indexOf(entry);
+            const coords = [entry.start_latlng[1], entry.start_latlng[0]];
+            const projected = projection(coords);
+            if (!projected) return;
+            if (projected[0] < 0 || projected[0] > width || projected[1] < 0 || projected[1] > height) return;
+
+            svg.append('circle')
+                .attr('cx', projected[0])
+                .attr('cy', projected[1])
+                .attr('r', 10)
+                .attr('fill', glowColor)
+                .attr('opacity', 0.5);
+
+            svg.append('circle')
+                .attr('cx', projected[0])
+                .attr('cy', projected[1])
+                .attr('r', 5)
+                .attr('fill', markerColor)
+                .attr('stroke', '#fff')
+                .attr('stroke-width', 1.5)
+                .attr('opacity', 0.9)
+                .style('cursor', 'pointer')
+                .on('mouseenter', () => {
+                    const runsLabel = entry.total_runs === 1 ? 'run' : 'runs';
+                    tooltip
+                        .html(`<strong>${entry.city}</strong> &middot; ${entry.total_miles} mi &middot; ${entry.total_runs} ${runsLabel}`)
+                        .style('left', (projected[0] + 14) + 'px')
+                        .style('top', (projected[1] - 10) + 'px')
+                        .style('opacity', 1);
+                })
+                .on('mouseleave', () => {
+                    tooltip.style('opacity', 0);
+                })
+                .on('click', () => {
+                    const card = document.getElementById(`featured-card-${globalIdx}`);
+                    if (card) {
+                        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                });
+        });
+    }
+
+    function renderFeaturedMaps() {
+        featuredMapInstances.forEach((m) => m.remove());
+        featuredMapInstances = [];
+
+        if (!featuredData) return;
+
+        const tileUrl = getTileUrl();
+
+        featuredData.forEach((entry, i) => {
+            const run = entry.featured_run;
+            const mapEl = document.getElementById(`featured-map-${i}`);
+            if (!mapEl || !run.coordinates || run.coordinates.length === 0) return;
+
+            const map = L.map(mapEl, {
+                zoomControl: false,
+                attributionControl: false,
+                dragging: false,
+                scrollWheelZoom: false,
+                doubleClickZoom: false,
+                touchZoom: false,
+                boxZoom: false,
+                keyboard: false,
+            });
+
+            L.tileLayer(tileUrl, { subdomains: 'abcd', maxZoom: 19 }).addTo(map);
+            addGlowPolyline(map, run.coordinates);
+
+            const bounds = L.latLngBounds(run.coordinates);
+            map.fitBounds(bounds, { padding: [30, 30] });
+
+            featuredMapInstances.push(map);
         });
     }
 })();
