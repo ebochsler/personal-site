@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun — Eric Bochsler</title>
+    <meta name="description" content="Brewery, bar, and venue visits tracked from Eric Bochsler's adventures.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Animated background canvas -->
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+    <!-- Header / Nav -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">Eric Bochsler</a>
+            <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="nav" id="nav">
+                <a href="index.html#about" class="nav-link">About</a>
+                <a href="index.html#projects" class="nav-link">Projects</a>
+                <a href="index.html#resume" class="nav-link">Resume</a>
+                <div class="mode-toggle">
+                    <a href="index.html" class="mode-btn" aria-label="Work" title="Work">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="4" x2="4" y2="20"/><line x1="4" y1="20" x2="20" y2="20"/><rect class="chart-bar bar-1" x="7" y="14" width="3" height="6" rx="0.5" fill="currentColor" stroke="none"/><rect class="chart-bar bar-2" x="11" y="9" width="3" height="11" rx="0.5" fill="currentColor" stroke="none"/><rect class="chart-bar bar-3" x="15" y="5" width="3" height="15" rx="0.5" fill="currentColor" stroke="none"/></svg>
+                    </a>
+                    <a href="running.html" class="mode-btn" aria-label="Run" title="Run">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g class="runner-figure"><circle cx="14" cy="3.5" r="2" fill="currentColor" stroke="none"/><path d="M13.5 5.5L11 12"/><path d="M12.5 7.5L8 10"/><path d="M12.5 7.5L15 9.5L16 7"/><path d="M11 12L7 17L5 20.5"/><path d="M11 12L14.5 16L15.5 20"/></g></svg>
+                    </a>
+                    <a href="fun.html" class="mode-btn active" aria-label="Fun" title="Fun">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><defs><clipPath id="mug-clip"><path d="M6 3h10v16a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V3z"/></clipPath></defs><g clip-path="url(#mug-clip)"><rect class="beer-liquid" x="6" y="3" width="10" height="18" fill="currentColor" stroke="none"/><g class="beer-foam"><circle cx="7.5" cy="5.5" r="2.5" fill="currentColor" stroke="none"/><circle cx="11" cy="5" r="2.8" fill="currentColor" stroke="none"/><circle cx="14.5" cy="5.5" r="2.5" fill="currentColor" stroke="none"/></g><circle class="beer-bubble b1" cx="9" cy="14" r="0.7" fill="currentColor" stroke="none"/><circle class="beer-bubble b2" cx="12" cy="11" r="0.5" fill="currentColor" stroke="none"/><circle class="beer-bubble b3" cx="10.5" cy="17" r="0.6" fill="currentColor" stroke="none"/></g><path d="M6 3h10v16a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V3z"/><path d="M16 7h2a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2"/></svg>
+                    </a>
+                </div>
+                <a href="https://www.linkedin.com/in/eric-bochsler-14298a109/" class="nav-link" target="_blank" rel="noopener noreferrer">LinkedIn &#8599;</a>
+            </nav>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
+                <svg class="theme-icon sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="theme-icon moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Fun Hero -->
+    <section class="running-hero" id="fun-hero">
+        <div class="container">
+            <p class="hero-greeting mono">// good times</p>
+            <h1 class="running-hero-title">Fun</h1>
+            <p class="running-hero-month mono" id="fun-subtitle">Loading...</p>
+        </div>
+    </section>
+
+    <!-- Section 01: Overview -->
+    <section class="section" id="overview">
+        <div class="container">
+            <h2 class="section-heading">
+                <span class="section-number mono">01.</span> Overview
+            </h2>
+
+            <!-- Stat Cards -->
+            <div class="stat-cards fun-stat-cards" id="stat-cards">
+                <div class="stat-card reveal">
+                    <span class="stat-icon mono">&#127866;</span>
+                    <span class="stat-value" id="stat-venues" data-target="0">0</span>
+                    <span class="stat-unit">places</span>
+                    <span class="stat-label">Venues</span>
+                </div>
+                <div class="stat-card reveal">
+                    <span class="stat-icon mono">#</span>
+                    <span class="stat-value" id="stat-visits" data-target="0">0</span>
+                    <span class="stat-unit">total</span>
+                    <span class="stat-label">Visits</span>
+                </div>
+                <div class="stat-card reveal">
+                    <span class="stat-icon mono">&#9201;</span>
+                    <span class="stat-value" id="stat-hours" data-target="0">0</span>
+                    <span class="stat-unit">hours</span>
+                    <span class="stat-label">Time Spent</span>
+                </div>
+                <div class="stat-card reveal">
+                    <span class="stat-icon mono">&#127758;</span>
+                    <span class="stat-value" id="stat-cities" data-target="0">0</span>
+                    <span class="stat-unit">cities</span>
+                    <span class="stat-label">Cities</span>
+                </div>
+            </div>
+
+            <!-- Charts: Category + Monthly -->
+            <div class="running-charts reveal">
+                <div class="chart-block">
+                    <h3 class="chart-title mono">> by category</h3>
+                    <div class="bar-chart" id="category-bars"></div>
+                </div>
+                <div class="chart-block">
+                    <h3 class="chart-title mono">> monthly visits</h3>
+                    <div class="bar-chart" id="monthly-bars"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 02: Venue Map -->
+    <section class="section" id="venue-map-section">
+        <div class="container">
+            <h2 class="section-heading">
+                <span class="section-number mono">02.</span> Venue Map
+            </h2>
+            <div class="venue-map-container reveal">
+                <div id="venue-map"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 03: Leaderboards -->
+    <section class="section" id="leaderboards">
+        <div class="container">
+            <h2 class="section-heading">
+                <span class="section-number mono">03.</span> Leaderboards
+            </h2>
+            <div class="running-charts reveal">
+                <div class="chart-block">
+                    <h3 class="chart-title mono">> top by visits</h3>
+                    <div class="bar-chart" id="leaderboard-visits"></div>
+                </div>
+                <div class="chart-block">
+                    <h3 class="chart-title mono">> top by hours</h3>
+                    <div class="bar-chart" id="leaderboard-hours"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-links">
+                <a href="https://www.linkedin.com/in/eric-bochsler-14298a109/" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn &#8599;</a>
+            </div>
+            <p class="footer-tagline mono">Built with data &amp; code</p>
+            <p class="footer-copy">&copy; 2026 Eric Bochsler. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="fun.js"></script>
+</body>
+</html>

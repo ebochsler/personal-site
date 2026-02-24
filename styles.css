@@ -198,6 +198,131 @@ img {
 }
 
 /* ============================================================
+   Mode Toggle
+   ============================================================ */
+.mode-toggle {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border-medium);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.mode-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    background: transparent;
+    cursor: pointer;
+    transition: color 0.2s, background 0.2s;
+}
+
+.mode-btn:hover {
+    color: var(--primary);
+}
+
+.mode-btn.active {
+    color: var(--primary);
+    background: var(--tag-bg);
+}
+
+.mode-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* ---- Mode Toggle Icon Animations ---- */
+
+/* Chart bars (Work icon) */
+.chart-bar {
+    transform-box: fill-box;
+    transform-origin: center bottom;
+    transform: scaleY(0.25);
+    opacity: 0.3;
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                opacity 0.3s ease;
+}
+
+.bar-2 { transition-delay: 0.07s; }
+.bar-3 { transition-delay: 0.14s; }
+
+.mode-btn:hover .chart-bar,
+.mode-btn.active .chart-bar {
+    transform: scaleY(1);
+    opacity: 0.75;
+}
+
+/* Runner bounce (Run icon) */
+@keyframes runner-bounce {
+    0%, 100% { transform: translateY(0); }
+    35% { transform: translateY(-2px) rotate(-4deg); }
+    65% { transform: translateY(0.5px) rotate(1.5deg); }
+}
+
+.runner-figure {
+    transform-box: fill-box;
+    transform-origin: center center;
+}
+
+.mode-btn.active .runner-figure {
+    animation: runner-bounce 0.5s ease 1;
+}
+
+.mode-btn:hover .runner-figure {
+    animation: runner-bounce 0.35s ease 2;
+}
+
+/* Beer fill (Fun icon) */
+.beer-liquid {
+    transform-box: fill-box;
+    transform-origin: center bottom;
+    transform: scaleY(0);
+    opacity: 0;
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.05s,
+                opacity 0.3s ease;
+}
+
+.mode-btn:hover .beer-liquid,
+.mode-btn.active .beer-liquid {
+    transform: scaleY(1);
+    opacity: 0.35;
+}
+
+.beer-foam circle {
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.mode-btn:hover .beer-foam circle,
+.mode-btn.active .beer-foam circle {
+    opacity: 0.6;
+    transition-delay: 0.35s;
+}
+
+/* Beer bubbles */
+@keyframes bubble-rise {
+    0% { transform: translateY(0); opacity: 0; }
+    15% { opacity: 0.4; }
+    85% { opacity: 0.3; }
+    100% { transform: translateY(-5px); opacity: 0; }
+}
+
+.beer-bubble {
+    opacity: 0;
+}
+
+.mode-btn:hover .beer-bubble,
+.mode-btn.active .beer-bubble {
+    animation: bubble-rise 1.8s ease-in-out infinite;
+}
+
+.b2 { animation-delay: 0.6s; }
+.b3 { animation-delay: 1.2s; }
+
+/* ============================================================
    Hero
    ============================================================ */
 .hero {
@@ -889,6 +1014,10 @@ img {
         font-size: 1rem;
     }
 
+    .mode-toggle {
+        margin: 0.75rem 0;
+    }
+
     .projects-grid {
         grid-template-columns: 1fr;
     }
@@ -917,6 +1046,17 @@ img {
     z-index: 1;
     padding-top: calc(var(--header-h) + 4rem);
     padding-bottom: 2rem;
+}
+
+.running-hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+}
+
+.running-hero-text {
+    flex: 1;
 }
 
 .running-hero-title {
@@ -1481,6 +1621,11 @@ img {
 
 /* --- Running Page Responsive --- */
 @media (max-width: 900px) {
+    .running-hero-content {
+        flex-direction: column-reverse;
+        text-align: center;
+    }
+
     .stat-cards {
         grid-template-columns: repeat(3, 1fr);
     }
@@ -1543,5 +1688,120 @@ img {
 
     .goal-runner {
         font-size: 1.2rem;
+    }
+}
+
+/* ============================================================
+   Fun Page — Venue Map, Leaderboards, Popups
+   ============================================================ */
+
+/* --- Stat cards: 4-column grid for fun page --- */
+.fun-stat-cards {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+/* --- Venue Map Container --- */
+.venue-map-container {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.venue-map-container:hover {
+    border-color: var(--card-border-hover);
+    box-shadow: 0 10px 40px var(--card-shadow-hover);
+}
+
+#venue-map {
+    width: 100%;
+    height: 500px;
+}
+
+[data-theme="light"] .venue-map-container {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .venue-map-container:hover {
+    box-shadow: 0 8px 30px rgba(0, 136, 204, 0.12);
+}
+
+/* --- Venue Leaderboard Rows (wider labels) --- */
+.venue-hbar-row {
+    grid-template-columns: 160px 1fr 36px;
+}
+
+.venue-hbar-label {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* --- Leaflet Popup Overrides --- */
+.leaflet-popup-content-wrapper {
+    background: var(--bg-card);
+    border: 1px solid var(--border-medium);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.leaflet-popup-tip {
+    background: var(--bg-card);
+}
+
+.venue-popup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.1rem 0;
+}
+
+.venue-popup-name {
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    color: var(--primary);
+}
+
+.venue-popup-cat {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: capitalize;
+}
+
+.venue-popup-stat {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text);
+}
+
+/* --- Fun Page Responsive --- */
+@media (max-width: 900px) {
+    .fun-stat-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    #venue-map {
+        height: 400px;
+    }
+
+    .venue-hbar-row {
+        grid-template-columns: 130px 1fr 36px;
+    }
+}
+
+@media (max-width: 640px) {
+    #venue-map {
+        height: 300px;
+    }
+
+    .venue-hbar-row {
+        grid-template-columns: 100px 1fr 30px;
+    }
+
+    .venue-hbar-label {
+        font-size: 0.7rem;
     }
 }

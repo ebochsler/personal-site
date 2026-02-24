@@ -1,0 +1,54 @@
+{
+  "ChIJKbLpOI8UkFQRC30sDr56TAs": {
+    "include": false,
+    "reason": "false positive - Din Tai Fung restaurant"
+  },
+  "ChIJXyKdTAcVkFQRjVEDu0mJ8Bw": {
+    "include": false,
+    "reason": "false positive - Pel Meni Dumpling Tzar"
+  },
+  "ChIJs9UN0DUDdkgRutjvuNcU2no": {
+    "include": false,
+    "reason": "false positive - Wombat's City Hostel London"
+  },
+  "ChIJmSXvS71hLxMRkUrcLqugcP8": {
+    "include": false,
+    "reason": "false positive - Generator Rome hostel"
+  },
+  "ChIJnUzP03JghUcRAcYTTmwwmfU": {
+    "include": false,
+    "reason": "false positive - Hotel Central"
+  },
+  "ChIJffraDFVQqEcRquzI-qL503w": {
+    "include": false,
+    "reason": "false positive - Hotel Palace Berlin"
+  },
+  "ChIJ-RAVYVVQqEcRny9qhRJtz1g": {
+    "include": false,
+    "reason": "false positive - 25hours Hotel Bikini Berlin"
+  },
+  "ChIJtXbl7d94bIcRmDyPp2VT1p0": {
+    "include": false,
+    "reason": "false positive - The Ramble Hotel"
+  },
+  "ChIJnY_dUQyo2EcRfBBo4Y4RSVM": {
+    "include": false,
+    "reason": "false positive - Good Hotel London"
+  },
+  "ChIJ7VwTNcQVkFQR2NP16SI3uaI": {
+    "include": false,
+    "reason": "false positive - Crest Coffee Bar"
+  },
+  "ChIJjbi9vAqhlVQR1YKpdwEsS84": {
+    "include": false,
+    "reason": "false positive - Happy Cup Coffee Bar"
+  },
+  "ChIJfb99MPiipBIRRm7r5cGAKF4": {
+    "include": false,
+    "reason": "false positive - Right Side Coffee Bar"
+  },
+  "ChIJU4tRdw8KlVQRmKqZNp2bgpg": {
+    "include": false,
+    "reason": "false positive - 40 LBS Coffee Bar"
+  }
+}

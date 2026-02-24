@@ -7,19 +7,21 @@
 
     // ── Typing Effect ──────────────────────────────────────────
     const typingEl = document.getElementById('typing-text');
-    const name = 'Eric Bochsler';
-    let charIndex = 0;
+    if (typingEl) {
+        const name = 'Eric Bochsler';
+        let charIndex = 0;
 
-    function type() {
-        if (charIndex <= name.length) {
-            typingEl.textContent = name.slice(0, charIndex);
-            charIndex++;
-            setTimeout(type, 100);
+        function type() {
+            if (charIndex <= name.length) {
+                typingEl.textContent = name.slice(0, charIndex);
+                charIndex++;
+                setTimeout(type, 100);
+            }
         }
-    }
 
-    // Start typing after a brief delay
-    setTimeout(type, 600);
+        // Start typing after a brief delay
+        setTimeout(type, 600);
+    }
 
     // ── Scroll Reveal ──────────────────────────────────────────
     const revealElements = document.querySelectorAll('.reveal');
@@ -41,21 +43,23 @@
     // ── Skill Bar Animation ────────────────────────────────────
     const skillFills = document.querySelectorAll('.skill-fill');
 
-    const skillObserver = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const width = entry.target.getAttribute('data-width');
-                    entry.target.style.width = width + '%';
-                    entry.target.classList.add('animate');
-                    skillObserver.unobserve(entry.target);
-                }
-            });
-        },
-        { threshold: 0.3 }
-    );
+    if (skillFills.length) {
+        const skillObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const width = entry.target.getAttribute('data-width');
+                        entry.target.style.width = width + '%';
+                        entry.target.classList.add('animate');
+                        skillObserver.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.3 }
+        );
 
-    skillFills.forEach((el) => skillObserver.observe(el));
+        skillFills.forEach((el) => skillObserver.observe(el));
+    }
 
     // ── Mobile Nav Toggle ──────────────────────────────────────
     const navToggle = document.querySelector('.nav-toggle');
