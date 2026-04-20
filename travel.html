@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fun — Eric Bochsler</title>
-    <meta name="description" content="Brewery, bar, and venue visits tracked from Eric Bochsler's adventures.">
-    <link rel="canonical" href="https://bochsler.org/fun.html">
-    <meta property="og:title" content="Fun — Eric Bochsler">
-    <meta property="og:description" content="Brewery, bar, and venue visits tracked from Eric Bochsler's adventures.">
-    <meta property="og:url" content="https://bochsler.org/fun.html">
+    <title>Travel — Eric Bochsler</title>
+    <meta name="description" content="City ratings, travel log, and spider charts from Eric Bochsler's adventures around the world.">
+    <link rel="canonical" href="https://bochsler.org/travel.html">
+    <meta property="og:title" content="Travel — Eric Bochsler">
+    <meta property="og:description" content="City ratings, travel log, and spider charts from Eric Bochsler's adventures around the world.">
+    <meta property="og:url" content="https://bochsler.org/travel.html">
     <meta property="og:type" content="website">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,10 +40,7 @@
                     <a href="running.html" class="mode-btn" aria-label="Run" title="Run">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g class="runner-figure"><circle cx="14" cy="3.5" r="2" fill="currentColor" stroke="none"/><path d="M13.5 5.5L11 12"/><path d="M12.5 7.5L8 10"/><path d="M12.5 7.5L15 9.5L16 7"/><path d="M11 12L7 17L5 20.5"/><path d="M11 12L14.5 16L15.5 20"/></g></svg>
                     </a>
-                    <a href="fun.html" class="mode-btn active" aria-label="Fun" title="Fun">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><defs><clipPath id="mug-clip"><path d="M6 3h10v16a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V3z"/></clipPath></defs><g clip-path="url(#mug-clip)"><rect class="beer-liquid" x="6" y="3" width="10" height="18" fill="currentColor" stroke="none"/><g class="beer-foam"><circle cx="7.5" cy="5.5" r="2.5" fill="currentColor" stroke="none"/><circle cx="11" cy="5" r="2.8" fill="currentColor" stroke="none"/><circle cx="14.5" cy="5.5" r="2.5" fill="currentColor" stroke="none"/></g><circle class="beer-bubble b1" cx="9" cy="14" r="0.7" fill="currentColor" stroke="none"/><circle class="beer-bubble b2" cx="12" cy="11" r="0.5" fill="currentColor" stroke="none"/><circle class="beer-bubble b3" cx="10.5" cy="17" r="0.6" fill="currentColor" stroke="none"/></g><path d="M6 3h10v16a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V3z"/><path d="M16 7h2a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2"/></svg>
-                    </a>
-                    <a href="travel.html" class="mode-btn" aria-label="Travel" title="Travel">
+                    <a href="travel.html" class="mode-btn active" aria-label="Travel" title="Travel">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><g class="compass-needle"><polygon points="12,3.5 13.5,11 12,10 10.5,11" fill="currentColor" stroke="none" opacity="0.85"/><polygon points="12,20.5 13.5,13 12,14 10.5,13" fill="currentColor" stroke="none" opacity="0.35"/></g><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg>
                     </a>
                 </div>
@@ -56,12 +53,12 @@
         </div>
     </header>
 
-    <!-- Fun Hero -->
-    <section class="running-hero" id="fun-hero">
+    <!-- Travel Hero -->
+    <section class="running-hero" id="travel-hero">
         <div class="container">
-            <p class="hero-greeting mono">// good times</p>
-            <h1 class="running-hero-title">Fun</h1>
-            <p class="running-hero-month mono" id="fun-subtitle">Loading...</p>
+            <p class="hero-greeting mono">// city log</p>
+            <h1 class="running-hero-title">Travel</h1>
+            <p class="running-hero-month mono" id="travel-subtitle">Loading...</p>
         </div>
     </section>
 
@@ -75,73 +72,57 @@
             <!-- Stat Cards -->
             <div class="stat-cards fun-stat-cards" id="stat-cards">
                 <div class="stat-card reveal">
-                    <span class="stat-icon mono">&#127866;</span>
-                    <span class="stat-value" id="stat-venues" data-target="0">0</span>
-                    <span class="stat-unit">places</span>
-                    <span class="stat-label">Venues</span>
-                </div>
-                <div class="stat-card reveal">
-                    <span class="stat-icon mono">#</span>
-                    <span class="stat-value" id="stat-visits" data-target="0">0</span>
+                    <span class="stat-icon mono">&#127961;</span>
+                    <span class="stat-value" id="stat-cities" data-target="0">0</span>
                     <span class="stat-unit">total</span>
-                    <span class="stat-label">Visits</span>
-                </div>
-                <div class="stat-card reveal">
-                    <span class="stat-icon mono">&#9201;</span>
-                    <span class="stat-value" id="stat-hours" data-target="0">0</span>
-                    <span class="stat-unit">hours</span>
-                    <span class="stat-label">Time Spent</span>
+                    <span class="stat-label">Cities</span>
                 </div>
                 <div class="stat-card reveal">
                     <span class="stat-icon mono">&#127758;</span>
-                    <span class="stat-value" id="stat-cities" data-target="0">0</span>
-                    <span class="stat-unit">cities</span>
-                    <span class="stat-label">Cities</span>
+                    <span class="stat-value" id="stat-countries" data-target="0">0</span>
+                    <span class="stat-unit">total</span>
+                    <span class="stat-label">Countries</span>
+                </div>
+                <div class="stat-card reveal">
+                    <span class="stat-icon mono">&#127757;</span>
+                    <span class="stat-value" id="stat-continents" data-target="0">0</span>
+                    <span class="stat-unit">total</span>
+                    <span class="stat-label">Continents</span>
+                </div>
+                <div class="stat-card reveal">
+                    <span class="stat-icon mono">&#11088;</span>
+                    <span class="stat-value" id="stat-avg" data-target="0">0</span>
+                    <span class="stat-unit">/10</span>
+                    <span class="stat-label">Avg Rating</span>
                 </div>
             </div>
 
-            <!-- Charts: Category + Monthly -->
-            <div class="running-charts reveal">
-                <div class="chart-block">
-                    <h3 class="chart-title mono">> by category</h3>
-                    <div class="bar-chart" id="category-bars"></div>
-                </div>
-                <div class="chart-block">
-                    <h3 class="chart-title mono">> monthly visits</h3>
-                    <div class="bar-chart" id="monthly-bars"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section 02: Venue Map -->
-    <section class="section" id="venue-map-section">
-        <div class="container">
-            <h2 class="section-heading">
-                <span class="section-number mono">02.</span> Venue Map
-            </h2>
+            <!-- City Map -->
             <div class="venue-map-container reveal">
-                <div id="venue-map"></div>
+                <div id="city-map"></div>
             </div>
         </div>
     </section>
 
-    <!-- Section 03: Leaderboards -->
-    <section class="section" id="leaderboards">
+    <!-- Section 02: City Ratings -->
+    <section class="section" id="city-ratings">
         <div class="container">
             <h2 class="section-heading">
-                <span class="section-number mono">03.</span> Leaderboards
+                <span class="section-number mono">02.</span> City Ratings
             </h2>
-            <div class="running-charts reveal">
-                <div class="chart-block">
-                    <h3 class="chart-title mono">> top by visits</h3>
-                    <div class="bar-chart" id="leaderboard-visits"></div>
-                </div>
-                <div class="chart-block">
-                    <h3 class="chart-title mono">> top by hours</h3>
-                    <div class="bar-chart" id="leaderboard-hours"></div>
-                </div>
+
+            <!-- Tier Filters -->
+            <div class="tier-filters" id="tier-filters">
+                <button class="tier-filter-btn active" data-tier="all">All</button>
+                <button class="tier-filter-btn tier-s" data-tier="S">S</button>
+                <button class="tier-filter-btn tier-a" data-tier="A">A</button>
+                <button class="tier-filter-btn tier-b" data-tier="B">B</button>
+                <button class="tier-filter-btn tier-c" data-tier="C">C</button>
+                <button class="tier-filter-btn tier-d" data-tier="D">D</button>
             </div>
+
+            <!-- City Cards Grid -->
+            <div class="city-cards-grid" id="city-cards-grid"></div>
         </div>
     </section>
 
@@ -157,6 +138,6 @@
     </footer>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="fun.js"></script>
+    <script src="travel.js"></script>
 </body>
 </html>

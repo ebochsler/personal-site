@@ -63,3 +63,4 @@ SQL · Python · dbt · Snowflake · Google BigQuery · Microsoft Fabric · Azur
 ## Certifications
 
 **Certified Tableau Data Analyst** *(2023)*
+

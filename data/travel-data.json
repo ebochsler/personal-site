@@ -1,0 +1,170 @@
+{
+  "summary": {
+    "total_cities": 8,
+    "total_countries": 7,
+    "total_continents": 4,
+    "avg_overall": 8.1
+  },
+  "cities": [
+    {
+      "name": "Barcelona",
+      "country": "Spain",
+      "continent": "eu",
+      "lat": 41.3874,
+      "lng": 2.1686,
+      "tier": "S",
+      "overall": 9.1,
+      "ratings": {
+        "public_transit": 9,
+        "food": 10,
+        "cost": 6,
+        "drinks_nightlife": 9,
+        "arts_culture": 10,
+        "public_space": 9,
+        "biking_walking": 10
+      },
+      "visited_year": 2024,
+      "notes": "Unmatched blend of beach, architecture, food, and energy. Walkable neighborhoods everywhere."
+    },
+    {
+      "name": "Copenhagen",
+      "country": "Denmark",
+      "continent": "eu",
+      "lat": 55.6761,
+      "lng": 12.5683,
+      "tier": "S",
+      "overall": 9.0,
+      "ratings": {
+        "public_transit": 9,
+        "food": 9,
+        "cost": 5,
+        "drinks_nightlife": 8,
+        "arts_culture": 9,
+        "public_space": 10,
+        "biking_walking": 10
+      },
+      "visited_year": 2024,
+      "notes": "The gold standard for urban biking. Clean, beautiful canals, incredible food scene."
+    },
+    {
+      "name": "New York",
+      "country": "United States",
+      "continent": "na",
+      "lat": 40.7128,
+      "lng": -74.0060,
+      "tier": "A",
+      "overall": 8.4,
+      "ratings": {
+        "public_transit": 8,
+        "food": 10,
+        "cost": 4,
+        "drinks_nightlife": 10,
+        "arts_culture": 10,
+        "public_space": 7,
+        "biking_walking": 8
+      },
+      "visited_year": 2025,
+      "notes": "The city that never sleeps lives up to the hype. Unbeatable food diversity and cultural depth."
+    },
+    {
+      "name": "Paris",
+      "country": "France",
+      "continent": "eu",
+      "lat": 48.8566,
+      "lng": 2.3522,
+      "tier": "A",
+      "overall": 8.6,
+      "ratings": {
+        "public_transit": 9,
+        "food": 10,
+        "cost": 5,
+        "drinks_nightlife": 8,
+        "arts_culture": 10,
+        "public_space": 9,
+        "biking_walking": 8
+      },
+      "visited_year": 2024,
+      "notes": "Every arrondissement has character. World-class museums, bakeries on every corner."
+    },
+    {
+      "name": "Seattle",
+      "country": "United States",
+      "continent": "na",
+      "lat": 47.6062,
+      "lng": -122.3321,
+      "tier": "A",
+      "overall": 8.0,
+      "ratings": {
+        "public_transit": 6,
+        "food": 8,
+        "cost": 5,
+        "drinks_nightlife": 7,
+        "arts_culture": 7,
+        "public_space": 9,
+        "biking_walking": 7
+      },
+      "visited_year": 2026,
+      "notes": "Home base. Incredible nature access, great coffee culture, solid food scene."
+    },
+    {
+      "name": "Boston",
+      "country": "United States",
+      "continent": "na",
+      "lat": 42.3601,
+      "lng": -71.0589,
+      "tier": "B",
+      "overall": 7.4,
+      "ratings": {
+        "public_transit": 7,
+        "food": 7,
+        "cost": 5,
+        "drinks_nightlife": 7,
+        "arts_culture": 8,
+        "public_space": 7,
+        "biking_walking": 7
+      },
+      "visited_year": 2023,
+      "notes": "Historic charm, great running paths along the Charles. Compact and walkable downtown."
+    },
+    {
+      "name": "Reykjavik",
+      "country": "Iceland",
+      "continent": "eu",
+      "lat": 64.1466,
+      "lng": -21.9426,
+      "tier": "B",
+      "overall": 7.3,
+      "ratings": {
+        "public_transit": 5,
+        "food": 7,
+        "cost": 3,
+        "drinks_nightlife": 7,
+        "arts_culture": 7,
+        "public_space": 9,
+        "biking_walking": 8
+      },
+      "visited_year": 2024,
+      "notes": "Otherworldly landscapes just outside the city. Small but vibrant downtown with great bars."
+    },
+    {
+      "name": "Tokyo",
+      "country": "Japan",
+      "continent": "as",
+      "lat": 35.6762,
+      "lng": 139.6503,
+      "tier": "S",
+      "overall": 9.3,
+      "ratings": {
+        "public_transit": 10,
+        "food": 10,
+        "cost": 7,
+        "drinks_nightlife": 9,
+        "arts_culture": 9,
+        "public_space": 8,
+        "biking_walking": 8
+      },
+      "visited_year": 2025,
+      "notes": "Precision meets chaos. Best transit system on earth, food at every price point is exceptional."
+    }
+  ]
+}

@@ -1805,3 +1805,239 @@ img {
         font-size: 0.7rem;
     }
 }
+
+/* ============================================================
+   Travel Page — City Log, Spider Charts, Tier Badges
+   ============================================================ */
+
+/* --- City Map --- */
+#city-map {
+    width: 100%;
+    height: 500px;
+}
+
+/* --- Tier Filter Pills --- */
+.tier-filters {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.tier-filter-btn {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--border-medium);
+    border-radius: 20px;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.tier-filter-btn:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.tier-filter-btn.active {
+    color: var(--bg);
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+/* --- City Cards Grid --- */
+.city-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+/* --- City Card --- */
+.city-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+.city-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--card-border-hover);
+    box-shadow: 0 10px 40px var(--card-shadow-hover);
+}
+
+.city-card-header {
+    margin-bottom: 0.75rem;
+}
+
+.city-card-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.city-card-name {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.city-card-country {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* --- Tier Badges --- */
+.tier-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.15rem 0.55rem;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+}
+
+.tier-s {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+    border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.tier-a {
+    background: rgba(0, 212, 255, 0.1);
+    color: var(--primary);
+    border: 1px solid rgba(0, 212, 255, 0.25);
+}
+
+.tier-b {
+    background: rgba(0, 255, 136, 0.1);
+    color: var(--secondary);
+    border: 1px solid rgba(0, 255, 136, 0.25);
+}
+
+.tier-c {
+    background: rgba(255, 107, 53, 0.1);
+    color: var(--tertiary);
+    border: 1px solid rgba(255, 107, 53, 0.25);
+}
+
+.tier-d {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+[data-theme="light"] .tier-s {
+    background: rgba(184, 134, 11, 0.1);
+    color: #b8860b;
+    border-color: rgba(184, 134, 11, 0.3);
+}
+
+[data-theme="light"] .tier-d {
+    background: rgba(220, 38, 38, 0.1);
+    color: #dc2626;
+    border-color: rgba(220, 38, 38, 0.3);
+}
+
+/* --- Spider Chart --- */
+.spider-chart-container {
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem 0;
+}
+
+.spider-chart {
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+}
+
+/* --- City Card Footer --- */
+.city-card-footer {
+    margin-top: auto;
+    padding-top: 0.5rem;
+}
+
+.city-card-overall {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+.city-card-overall-unit {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+.city-card-notes {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* --- Compass Icon Animation --- */
+@keyframes compass-wobble {
+    0%, 100% { transform: rotate(0deg); }
+    20% { transform: rotate(15deg); }
+    40% { transform: rotate(-12deg); }
+    60% { transform: rotate(8deg); }
+    80% { transform: rotate(-4deg); }
+}
+
+.compass-needle {
+    transform-box: fill-box;
+    transform-origin: center center;
+}
+
+.mode-btn:hover .compass-needle {
+    animation: compass-wobble 0.6s ease 1;
+}
+
+.mode-btn.active .compass-needle {
+    animation: compass-wobble 0.5s ease 1;
+}
+
+/* --- Travel Light Mode --- */
+[data-theme="light"] .city-card {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .city-card:hover {
+    box-shadow: 0 8px 30px rgba(0, 136, 204, 0.12);
+}
+
+/* --- Travel Page Responsive --- */
+@media (max-width: 900px) {
+    #city-map {
+        height: 400px;
+    }
+
+    .city-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    #city-map {
+        height: 300px;
+    }
+
+    .city-cards-grid {
+        grid-template-columns: 1fr;
+    }
+}
